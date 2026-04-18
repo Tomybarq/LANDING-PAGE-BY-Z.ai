@@ -1,4 +1,5 @@
 import React from 'react'
+import { useReveal } from '../hooks/useReveal'
 
 const services = {
   ar: [
@@ -19,12 +20,30 @@ const services = {
   ]
 }
 
+function ServiceCard({ s, index }) {
+  const { ref, visible } = useReveal()
+  return (
+    <div ref={ref} className="card-hover" style={{
+      background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '20px', padding: '32px', cursor: 'default',
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(30px)',
+      transition: `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s, box-shadow 0.3s ease, border-color 0.3s ease`
+    }}>
+      <div style={{ fontSize: '40px', marginBottom: '16px', display: 'inline-block' }} className="animate-float">{s.icon}</div>
+      <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '12px' }}>{s.title}</h3>
+      <p style={{ color: '#888', lineHeight: 1.7, fontSize: '15px' }}>{s.desc}</p>
+    </div>
+  )
+}
+
 export default function Services({ lang }) {
   const T = services[lang]
+  const { ref, visible } = useReveal()
   return (
     <section id="services" style={{ padding: '100px 0', background: 'rgba(255,255,255,0.02)' }}>
       <div className="container">
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <div ref={ref} style={{ textAlign: 'center', marginBottom: '64px', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)', transition: 'all 0.7s ease' }}>
           <h2 style={{ fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 800, marginBottom: '16px' }}>
             {lang === 'ar' ? 'خدماتنا' : 'Our Services'}
           </h2>
@@ -32,20 +51,8 @@ export default function Services({ lang }) {
             {lang === 'ar' ? 'نقدم حلولاً رقمية متكاملة لتحقيق النمو المستدام' : 'Comprehensive digital solutions for sustainable growth'}
           </p>
         </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-          {T.map((s, i) => (
-            <div key={i} style={{
-              background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: '20px', padding: '32px', transition: 'all 0.3s ease', cursor: 'default'
-            }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(108,99,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(108,99,255,0.3)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(0)' }}>
-              <div style={{ fontSize: '40px', marginBottom: '16px' }}>{s.icon}</div>
-              <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '12px' }}>{s.title}</h3>
-              <p style={{ color: '#888', lineHeight: 1.7, fontSize: '15px' }}>{s.desc}</p>
-            </div>
-          ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+          {T.map((s, i) => <ServiceCard key={i} s={s} index={i} />)}
         </div>
       </div>
     </section>

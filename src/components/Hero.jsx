@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const t = {
   ar: {
     badge: '🚀 نُحدث ثورة في علامتك التجارية',
-    title: 'حلول مبتكرة مدعومة\nبالذكاء الاصطناعي',
+    title1: 'حلول مبتكرة مدعومة',
+    title2: 'بالذكاء الاصطناعي',
     subtitle: 'نُمكّن الشركات والمنظمات في الشرق الأوسط من تحقيق نمو مستدام من خلال استراتيجيات التسويق الرقمي والأتمتة الذكية.',
     cta1: 'استكشف أعمالنا', cta2: 'حدد موعد استشارة',
     stat1: '+50', label1: 'عميل راضٍ',
@@ -12,7 +13,8 @@ const t = {
   },
   en: {
     badge: '🚀 Revolutionizing Your Brand with AI',
-    title: 'Innovative Solutions\nPowered by AI',
+    title1: 'Innovative Solutions',
+    title2: 'Powered by AI',
     subtitle: 'Empowering businesses and NGOs across the Middle East with sustainable growth through digital marketing and smart automation.',
     cta1: 'Explore Our Work', cta2: 'Schedule a Consultation',
     stat1: '50+', label1: 'Happy Clients',
@@ -23,43 +25,56 @@ const t = {
 
 export default function Hero({ lang }) {
   const T = t[lang]
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => { setTimeout(() => setLoaded(true), 100) }, [])
+
   return (
     <section id="home" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', paddingTop: '80px' }}>
-      {/* Background gradient */}
-      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 60% 50%, rgba(108,99,255,0.15) 0%, transparent 70%), radial-gradient(ellipse at 20% 80%, rgba(0,212,255,0.1) 0%, transparent 60%)' }} />
+      {/* Animated orbs */}
+      <div className="orb" style={{ width: 600, height: 600, background: 'rgba(108,99,255,0.12)', top: '-100px', right: '-100px', animationDelay: '0s' }} />
+      <div className="orb" style={{ width: 400, height: 400, background: 'rgba(0,212,255,0.08)', bottom: '0', left: '-50px', animationDelay: '2s' }} />
+      <div className="orb" style={{ width: 300, height: 300, background: 'rgba(255,107,107,0.06)', top: '40%', left: '40%', animationDelay: '4s' }} />
 
       <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 24px' }}>
-        <div style={{ display: 'inline-block', background: 'rgba(108,99,255,0.15)', border: '1px solid rgba(108,99,255,0.3)', borderRadius: '30px', padding: '8px 20px', marginBottom: '32px', fontSize: '14px', color: '#a09cf7' }}>
-          {T.badge}
+
+        <div className={loaded ? 'animate-fadeInUp' : ''} style={{ opacity: loaded ? 1 : 0 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(108,99,255,0.15)', border: '1px solid rgba(108,99,255,0.3)', borderRadius: '30px', padding: '8px 20px', marginBottom: '32px', fontSize: '14px', color: '#a09cf7' }}>
+            {T.badge}
+          </div>
         </div>
 
-        <h1 style={{ fontSize: 'clamp(40px, 7vw, 80px)', fontWeight: 900, lineHeight: 1.1, marginBottom: '24px', whiteSpace: 'pre-line' }}>
-          <span style={{ background: 'linear-gradient(135deg, #ffffff 0%, #a09cf7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {T.title}
-          </span>
-        </h1>
+        <div className={loaded ? 'animate-fadeInUp delay-200' : ''} style={{ opacity: loaded ? 1 : 0 }}>
+          <h1 style={{ fontSize: 'clamp(40px, 7vw, 80px)', fontWeight: 900, lineHeight: 1.1, marginBottom: '24px' }}>
+            <span style={{ color: '#fff', display: 'block' }}>{T.title1}</span>
+            <span className="gradient-text" style={{ display: 'block' }}>{T.title2}</span>
+          </h1>
+        </div>
 
-        <p style={{ fontSize: '18px', color: '#888', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.8 }}>
-          {T.subtitle}
-        </p>
+        <div className={loaded ? 'animate-fadeInUp delay-300' : ''} style={{ opacity: loaded ? 1 : 0 }}>
+          <p style={{ fontSize: '18px', color: '#888', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.8 }}>
+            {T.subtitle}
+          </p>
+        </div>
 
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '80px' }}>
-          <a href="#portfolio" style={{ background: 'linear-gradient(135deg, #6C63FF, #00D4FF)', color: '#fff', padding: '16px 36px', borderRadius: '30px', textDecoration: 'none', fontWeight: 700, fontSize: '16px' }}>
+        <div className={loaded ? 'animate-fadeInUp delay-400' : ''} style={{ opacity: loaded ? 1 : 0, display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '80px' }}>
+          <a href="#portfolio" className="btn-primary" style={{ padding: '16px 36px', borderRadius: '30px', textDecoration: 'none', fontWeight: 700, fontSize: '16px', display: 'inline-block' }}>
             {T.cta1}
           </a>
-          <a href="#contact" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', padding: '16px 36px', borderRadius: '30px', textDecoration: 'none', fontWeight: 600, fontSize: '16px' }}>
+          <a href="#contact" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', padding: '16px 36px', borderRadius: '30px', textDecoration: 'none', fontWeight: 600, fontSize: '16px', transition: 'all 0.3s ease' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)' }}>
             {T.cta2}
           </a>
         </div>
 
         <div style={{ display: 'flex', gap: '60px', justifyContent: 'center', flexWrap: 'wrap' }}>
           {[
-            { val: T.stat1, label: T.label1 },
-            { val: T.stat2, label: T.label2 },
-            { val: T.stat3, label: T.label3 }
+            { val: T.stat1, label: T.label1, delay: 'delay-400' },
+            { val: T.stat2, label: T.label2, delay: 'delay-500' },
+            { val: T.stat3, label: T.label3, delay: 'delay-600' }
           ].map((s, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '48px', fontWeight: 900, background: 'linear-gradient(135deg, #6C63FF, #00D4FF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{s.val}</div>
+            <div key={i} className={loaded ? `animate-counter ${s.delay}` : ''} style={{ textAlign: 'center', opacity: loaded ? 1 : 0 }}>
+              <div className="animate-pulse-glow" style={{ fontSize: '48px', fontWeight: 900, background: 'linear-gradient(135deg, #6C63FF, #00D4FF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', borderRadius: '8px' }}>{s.val}</div>
               <div style={{ color: '#888', fontSize: '14px', marginTop: '4px' }}>{s.label}</div>
             </div>
           ))}
