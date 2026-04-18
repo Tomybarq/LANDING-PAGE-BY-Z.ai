@@ -6,6 +6,7 @@ import Portfolio from './components/Portfolio'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import ChatBot from './components/ChatBot'
 
 export default function App() {
   const [lang, setLang] = useState('ar')
@@ -24,6 +25,7 @@ export default function App() {
       <About lang={lang} />
       <Contact lang={lang} />
       <Footer lang={lang} />
+      <ChatBot lang={lang} />
     </div>
   )
 }
